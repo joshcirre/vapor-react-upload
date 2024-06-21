@@ -1,0 +1,14 @@
+id: 62715
+name: react-vapor
+environments:
+    production:
+        memory: 1024
+        cli-memory: 512
+        runtime: 'php-8.3:al2'
+        storage: 'react-vapor-test'
+        build:
+            - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+            - 'php artisan event:cache'
+            - 'npm ci && npm run build && rm -rf node_modules'
+        deploy:
+            - 'php artisan migrate --force'
